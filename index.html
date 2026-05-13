@@ -213,6 +213,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--text);color:var(--bg);padding:8px 18px;border-radius:40px;font-size:13px;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;z-index:100}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+
+/* SYNC */
+.sync-indicator{position:fixed;top:12px;right:16px;z-index:300;display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3);background:var(--surface);border:.5px solid var(--border);border-radius:40px;padding:4px 10px;transition:all .3s}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0}
+.sync-indicator.syncing .sync-dot{background:var(--media);animation:pulse .8s infinite}
+.sync-indicator.ok .sync-dot{background:var(--baja)}
+.sync-indicator.error .sync-dot{background:var(--alta)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 </style>
 </head>
 <body>
@@ -307,6 +315,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="cal-detail" id="calDetail"></div>
 </div>
 
+<div class="sync-indicator" id="syncIndicator"><div class="sync-dot"></div><span id="syncLabel">Conectando...</span></div>
 <nav class="nav">
   <button class="nav-btn active" id="nav-home" onclick="showScreen('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Inicio</button>
   <button class="nav-btn" id="nav-cal" onclick="showScreen('cal')" style="position:relative"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Calendario<span class="nav-badge" id="calBadge" style="display:none"></span></button>
@@ -331,12 +340,107 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <div class="toast" id="toast"></div>
 
 <script>
+const SUPABASE_URL = 'https://btdvzwzrcfvpxsyxwhga.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0ZHZ6d3pyY2Z2cHhzeXh3aGdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2ODAwODgsImV4cCI6MjA5NDI1NjA4OH0.rEenZdQZsiqOuOfyuZMj1S2as0FOYf9MjEdUBi2zUOA';
+
+// ── Supabase sync ─────────────────────────────────────────────────────────────
+let syncTimeout = null;
+let lastRemoteUpdate = null;
+
+function setSyncStatus(state, label) {
+  const ind = document.getElementById('syncIndicator');
+  const lbl = document.getElementById('syncLabel');
+  ind.className = 'sync-indicator ' + state;
+  lbl.textContent = label;
+}
+
+async function pushToSupabase() {
+  setSyncStatus('syncing', 'Guardando...');
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/midia_data?id=eq.main`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ tasks, sub_mem: subMem, updated_at: new Date().toISOString() })
+    });
+    if (res.ok) {
+      setSyncStatus('ok', 'Sincronizado');
+    } else {
+      setSyncStatus('error', 'Error al guardar');
+    }
+  } catch(e) {
+    setSyncStatus('error', 'Sin conexión');
+  }
+}
+
+async function pullFromSupabase() {
+  setSyncStatus('syncing', 'Cargando...');
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/midia_data?id=eq.main&select=tasks,sub_mem,updated_at`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    if (!res.ok) { setSyncStatus('error', 'Error al cargar'); return false; }
+    const data = await res.json();
+    if (data && data[0]) {
+      const remote = data[0];
+      lastRemoteUpdate = remote.updated_at;
+      if (remote.tasks && Object.keys(remote.tasks).length > 0) {
+        tasks = remote.tasks;
+        ALL.forEach(a => { if (!tasks[a]) tasks[a] = []; });
+        save();
+      }
+      if (remote.sub_mem) {
+        subMem = remote.sub_mem;
+        try { localStorage.setItem('midia_sub10', JSON.stringify(subMem)); } catch(e) {}
+      }
+      setSyncStatus('ok', 'Sincronizado');
+      return true;
+    }
+    setSyncStatus('ok', 'Sincronizado');
+    return false;
+  } catch(e) {
+    setSyncStatus('error', 'Sin conexión');
+    return false;
+  }
+}
+
+function schedulePush() {
+  clearTimeout(syncTimeout);
+  syncTimeout = setTimeout(() => pushToSupabase(), 1500);
+}
+
+// Poll every 30 seconds for changes from other devices
+setInterval(async () => {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/midia_data?id=eq.main&select=updated_at`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data && data[0] && data[0].updated_at !== lastRemoteUpdate) {
+      const pulled = await pullFromSupabase();
+      if (pulled) {
+        if (!cArea) renderHome(); else renderInner();
+        showToast('Datos actualizados desde otro dispositivo');
+      }
+    }
+  } catch(e) {}
+}, 30000);
+
+
 const AREAS={cont:{name:'Contabilidad',color:'#2A52A8',tagClass:'area-tag-cont'},trib:{name:'Tributaria',color:'#7A3AAA',tagClass:'area-tag-trib'},prov:{name:'Proveedores',color:'#1A7A5A',tagClass:'area-tag-prov'},otro:{name:'Otros',color:'#8A6A2A',tagClass:'area-tag-otro'}};
 const ALL=['cont','trib','prov','otro'];
 let cArea=null,pVal='alta',tasks={},calDate=new Date(),selDay=null,editId=null,editArea=null,homeTab='hoy',subMem={};
 
 function load(){try{const s=localStorage.getItem('midia_v10');if(s)tasks=JSON.parse(s);}catch(e){}ALL.forEach(a=>{if(!tasks[a])tasks[a]=[];});}
-function save(){try{localStorage.setItem('midia_v10',JSON.stringify(tasks));}catch(e){}}
+function save(){try{localStorage.setItem('midia_v10',JSON.stringify(tasks));}catch(e){}schedulePush();}
 function loadSub(){try{const s=localStorage.getItem('midia_sub10');if(s)subMem=JSON.parse(s);}catch(e){}}
 function addSub(area,name){if(!subMem[area])subMem[area]=[];if(!subMem[area].includes(name))subMem[area].push(name);try{localStorage.setItem('midia_sub10',JSON.stringify(subMem));}catch(e){}}
 function dk(d){return d.toISOString().split('T')[0];}
@@ -689,8 +793,15 @@ function copyTask(id,area){
 }
 
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
-load();loadSub();autoMove();setHeader();selDay=td();renderHome();
+load();loadSub();setHeader();selDay=td();
+// Pull from Supabase first, then render
+pullFromSupabase().then(pulled => {
+  autoMove();
+  if(pulled){ if(!cArea) renderHome(); else renderInner(); }
+  else renderHome();
+});
 setInterval(()=>{setHeader();if(!cArea)renderHome();},60000);
 </script>
 </body>
 </html>
+
