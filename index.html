@@ -221,6 +221,66 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .sync-indicator.ok .sync-dot{background:var(--baja)}
 .sync-indicator.error .sync-dot{background:var(--alta)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* NOTES */
+.notes-hdr{padding:48px 22px 14px;border-bottom:.5px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:10}
+.notes-title{font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:12px}
+.notes-area-tabs{display:flex;gap:0;background:var(--surface2);border-radius:40px;padding:3px;overflow-x:auto}
+.nat{flex-shrink:0;font-size:11px;font-weight:500;padding:6px 14px;border-radius:40px;border:none;background:none;cursor:pointer;color:var(--text3);font-family:inherit;transition:all .15s}
+.nat.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.notes-body{padding:14px 22px 90px}
+.note-add-box{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:16px}
+.note-textarea{width:100%;background:var(--surface2);border:none;border-radius:var(--rs);padding:10px 12px;font-size:14px;color:var(--text);font-family:inherit;outline:none;resize:none;min-height:80px;line-height:1.6}
+.note-textarea::placeholder{color:var(--text3)}.note-textarea:focus{box-shadow:0 0 0 1.5px var(--border2)}
+.note-add-row{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.note-area-sel{background:var(--surface2);border:none;border-radius:var(--rs);padding:8px 10px;font-size:13px;color:var(--text);font-family:inherit;outline:none;cursor:pointer}
+.note-save-btn{background:var(--text);color:var(--bg);border:none;border-radius:var(--rs);padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;margin-left:auto}
+.note-save-btn:active{transform:scale(.97)}
+.note-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:8px;animation:fadeIn .25s}
+.note-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.note-text{font-size:14px;color:var(--text);line-height:1.6;flex:1;white-space:pre-wrap;word-break:break-word}
+.note-actions{display:flex;gap:3px;flex-shrink:0}
+.note-meta{display:flex;gap:7px;margin-top:8px;align-items:center;flex-wrap:wrap}
+.note-date{font-size:11px;color:var(--text3)}
+.note-to-task-btn{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;background:var(--hoy-bg);color:var(--hoy);border:.5px solid rgba(42,82,168,.2);cursor:pointer;font-family:inherit;transition:all .15s}
+.note-to-task-btn:hover{background:var(--hoy);color:#fff}
+.note-editing textarea{width:100%;background:var(--surface2);border:none;border-radius:var(--rs);padding:8px 10px;font-size:14px;color:var(--text);font-family:inherit;outline:none;resize:none;line-height:1.6}
+.note-editing textarea:focus{box-shadow:0 0 0 1.5px var(--border2)}
+.note-edit-save{font-size:12px;font-weight:500;padding:5px 12px;border-radius:20px;background:var(--text);color:var(--bg);border:none;cursor:pointer;font-family:inherit;margin-top:6px}
+.empty-notes{text-align:center;padding:28px 0;font-size:13px;color:var(--text3)}
+
+/* SEARCH */
+.search-hdr{padding:48px 22px 14px;border-bottom:.5px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:10}
+.search-title{font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:12px}
+.search-input-wrap{position:relative}
+.search-input{width:100%;background:var(--surface);border:.5px solid var(--border2);border-radius:var(--rs);padding:10px 14px 10px 38px;font-size:14px;color:var(--text);font-family:inherit;outline:none}
+.search-input:focus{box-shadow:0 0 0 1.5px var(--hoy)}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none}
+.search-icon svg{width:16px;height:16px;stroke:var(--text3);stroke-width:2;fill:none}
+.search-filters{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.sf-btn{font-size:11px;font-weight:500;padding:5px 12px;border-radius:20px;border:.5px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;font-family:inherit;transition:all .15s}
+.sf-btn.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+.search-body{padding:14px 22px 90px}
+.search-empty{text-align:center;padding:40px 0;font-size:13px;color:var(--text3)}
+.search-result-type{font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;background:var(--surface2);color:var(--text2)}
+.search-highlight{background:rgba(255,220,0,.35);border-radius:3px;padding:0 1px}
+
+/* MEETING NOTES */
+.note-pending-item{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:var(--rs);background:var(--surface2)}
+.note-pending-text{flex:1;font-size:13px;color:var(--text)}
+.note-pending-del{background:none;border:none;cursor:pointer;color:var(--text3);font-size:15px;padding:0;opacity:.6}
+.note-pending-del:hover{opacity:1}
+.note-card-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px}
+.note-card-section{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin:8px 0 4px}
+.note-pending-card-item{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:var(--rs);background:var(--surface2);margin-bottom:4px}
+.note-pending-card-item.converted{opacity:.45}
+.note-pending-card-item.converted .note-pending-text{text-decoration:line-through}
+.npc-check{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--border2);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.npc-check:hover{border-color:var(--baja)}.npc-check.checked{background:var(--baja);border-color:var(--baja)}
+.npc-check svg{width:8px;height:8px;stroke:var(--bg);stroke-width:2.5;fill:none}
+.npc-to-task{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;background:var(--hoy-bg);color:var(--hoy);border:.5px solid rgba(42,82,168,.2);cursor:pointer;font-family:inherit;white-space:nowrap}
+.npc-to-task:hover{background:var(--hoy);color:#fff}
+.npc-to-task.done{background:var(--baja-bg);color:var(--baja);border-color:rgba(58,122,74,.2);cursor:default}
 </style>
 </head>
 <body>
@@ -316,9 +376,68 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </div>
 
 <div class="sync-indicator" id="syncIndicator"><div class="sync-dot"></div><span id="syncLabel">Conectando...</span></div>
+
+<!-- NOTES -->
+<div class="screen pb90" id="screen-notes">
+  <div class="notes-hdr">
+    <div class="notes-title">Notas</div>
+    <div class="notes-area-tabs">
+      <button class="nat active" id="nat-all" onclick="switchNoteTab('all')">Todas</button>
+      <button class="nat" id="nat-cont" onclick="switchNoteTab('cont')">Contabilidad</button>
+      <button class="nat" id="nat-trib" onclick="switchNoteTab('trib')">Tributaria</button>
+      <button class="nat" id="nat-prov" onclick="switchNoteTab('prov')">Proveedores</button>
+      <button class="nat" id="nat-otro" onclick="switchNoteTab('otro')">Otros</button>
+    </div>
+  </div>
+  <div class="notes-body">
+    <div class="note-add-box" id="noteAddBox" style="display:none">
+      <input type="text" class="fi fi-text" id="noteTitleInput" placeholder="Título de la reunión..." style="margin-bottom:9px;width:100%"/>
+      <div style="font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Apuntes</div>
+      <textarea class="note-textarea" id="noteTextarea" placeholder="Escribe los apuntes de la reunión..." rows="4"></textarea>
+      <div style="font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin:10px 0 5px">Pendientes de la reunión</div>
+      <div id="notePendingList" style="display:flex;flex-direction:column;gap:5px;margin-bottom:7px"></div>
+      <div style="display:flex;gap:6px;margin-bottom:10px">
+        <input type="text" class="fi fi-text" id="notePendingInput" placeholder="Agregar pendiente..." onkeydown="notePendingKey(event)"/>
+        <button class="sadd-btn" onclick="addNotePending()">+ Agregar</button>
+      </div>
+      <div class="note-add-row">
+        <select class="note-area-sel" id="noteAreaSel">
+          <option value="cont">Contabilidad</option>
+          <option value="trib">Tributaria</option>
+          <option value="prov">Proveedores</option>
+          <option value="otro">Otros</option>
+        </select>
+        <button class="bot-btn" style="padding:8px 14px" onclick="cancelNote()">Cancelar</button>
+        <button class="note-save-btn" onclick="addNote()">Guardar reunión</button>
+      </div>
+    </div>
+    <button class="note-save-btn" id="newNoteBtn" onclick="showNoteForm()" style="width:100%;margin-bottom:14px;border-radius:var(--r);padding:12px;font-size:14px">+ Nueva reunión / nota</button>
+    <div id="notesList"></div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="screen pb90" id="screen-search">
+  <div class="search-hdr">
+    <div class="search-title">Buscar</div>
+    <div class="search-input-wrap">
+      <div class="search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <input type="text" class="search-input" id="searchInput" placeholder="Buscar tareas y notas..." oninput="doSearch()" autocomplete="off"/>
+    </div>
+    <div class="search-filters">
+      <button class="sf-btn active" id="sf-all" onclick="setSFilter('all')">Todo</button>
+      <button class="sf-btn" id="sf-tasks" onclick="setSFilter('tasks')">Solo tareas</button>
+      <button class="sf-btn" id="sf-notes" onclick="setSFilter('notes')">Solo notas</button>
+    </div>
+  </div>
+  <div class="search-body" id="searchResults"><div class="search-empty">Escribe para buscar</div></div>
+</div>
+
 <nav class="nav">
   <button class="nav-btn active" id="nav-home" onclick="showScreen('home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Inicio</button>
   <button class="nav-btn" id="nav-cal" onclick="showScreen('cal')" style="position:relative"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Calendario<span class="nav-badge" id="calBadge" style="display:none"></span></button>
+  <button class="nav-btn" id="nav-notes" onclick="showScreen('notes')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Notas</button>
+  <button class="nav-btn" id="nav-search" onclick="showScreen('search');setTimeout(()=>document.getElementById('searchInput').focus(),100)"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Buscar</button>
 </nav>
 
 <!-- EDIT MODAL -->
@@ -365,7 +484,7 @@ async function pushToSupabase() {
         'Authorization': `Bearer ${SUPABASE_KEY}`,
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({ tasks, sub_mem: subMem, updated_at: new Date().toISOString() })
+      body: JSON.stringify({ tasks, sub_mem: subMem, notes, updated_at: new Date().toISOString() })
     });
     if (res.ok) {
       setSyncStatus('ok', 'Sincronizado');
@@ -380,7 +499,7 @@ async function pushToSupabase() {
 async function pullFromSupabase() {
   setSyncStatus('syncing', 'Cargando...');
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/midia_data?id=eq.main&select=tasks,sub_mem,updated_at`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/midia_data?id=eq.main&select=tasks,sub_mem,notes,updated_at`, {
       headers: {
         'apikey': SUPABASE_KEY,
         'Authorization': `Bearer ${SUPABASE_KEY}`
@@ -399,6 +518,11 @@ async function pullFromSupabase() {
       if (remote.sub_mem) {
         subMem = remote.sub_mem;
         try { localStorage.setItem('midia_sub10', JSON.stringify(subMem)); } catch(e) {}
+      }
+      if (remote.notes) {
+        notes = remote.notes;
+        ALL.forEach(a=>{if(!notes[a])notes[a]=[];});
+        saveNotes();
       }
       setSyncStatus('ok', 'Sincronizado');
       return true;
@@ -463,6 +587,8 @@ function showScreen(name){
   window.scrollTo(0,0);
   if(name==='home')renderHome();
   if(name==='cal'){selDay=selDay||td();renderCal();renderCalDetail();}
+  if(name==='notes')renderNotes();
+  if(name==='search'){setTimeout(()=>document.getElementById('searchInput').focus(),100);}
 }
 function switchTab(tab){
   homeTab=tab;
@@ -792,8 +918,252 @@ function copyTask(id,area){
   showToast('Tarea copiada — ajusta los detalles');
 }
 
+
+// ── Notes ─────────────────────────────────────────────────────────────────────
+let notes = {};
+let noteTab = 'all';
+let editingNoteId = null;
+let notePendingItems = []; // temp list while creating
+
+function loadNotes(){try{const s=localStorage.getItem('midia_notes');if(s)notes=JSON.parse(s);}catch(e){}ALL.forEach(a=>{if(!notes[a])notes[a]=[];});}
+function saveNotes(){try{localStorage.setItem('midia_notes',JSON.stringify(notes));}catch(e){}schedulePush();}
+
+function showNoteForm(){
+  document.getElementById('noteAddBox').style.display='block';
+  document.getElementById('newNoteBtn').style.display='none';
+  notePendingItems=[];
+  renderNotePendingList();
+  document.getElementById('noteTitleInput').focus();
+}
+function cancelNote(){
+  document.getElementById('noteAddBox').style.display='none';
+  document.getElementById('newNoteBtn').style.display='block';
+  document.getElementById('noteTitleInput').value='';
+  document.getElementById('noteTextarea').value='';
+  document.getElementById('notePendingInput').value='';
+  notePendingItems=[];
+  renderNotePendingList();
+}
+
+function addNotePending(){
+  const inp=document.getElementById('notePendingInput');
+  const text=inp.value.trim();if(!text)return;
+  notePendingItems.push({id:Date.now()+Math.random(),text,done:false,taskCreated:false});
+  inp.value='';renderNotePendingList();inp.focus();
+}
+function notePendingKey(e){if(e.key==='Enter')addNotePending();}
+function removeNotePending(id){notePendingItems=notePendingItems.filter(p=>p.id!==id);renderNotePendingList();}
+function renderNotePendingList(){
+  const el=document.getElementById('notePendingList');
+  if(!notePendingItems.length){el.innerHTML='';return;}
+  el.innerHTML=notePendingItems.map(p=>`<div class="note-pending-item">
+    <span class="note-pending-text">${p.text}</span>
+    <button class="note-pending-del" onclick="removeNotePending(${p.id})">×</button>
+  </div>`).join('');
+}
+
+function addNote(){
+  const title=document.getElementById('noteTitleInput').value.trim();
+  const text=document.getElementById('noteTextarea').value.trim();
+  if(!title&&!text&&!notePendingItems.length){showToast('Agrega título o contenido');return;}
+  const area=document.getElementById('noteAreaSel').value;
+  if(!notes[area])notes[area]=[];
+  notes[area].unshift({
+    id:Date.now(),
+    title:title||'Sin título',
+    text,
+    area,
+    pending:notePendingItems.map(p=>({...p})),
+    createdAt:new Date().toISOString()
+  });
+  saveNotes();
+  cancelNote();
+  renderNotes();showToast('Reunión guardada');
+}
+
+function deleteNote(id,area){
+  notes[area]=notes[area].filter(n=>n.id!==id);
+  saveNotes();renderNotes();showToast('Nota eliminada');
+}
+
+function startEditNote(id,area){editingNoteId={id,area};renderNotes();setTimeout(()=>{const el=document.getElementById('nedit-'+id);if(el){el.focus();el.selectionStart=el.value.length;}},50);}
+function saveNoteEdit(id,area){
+  const titleEl=document.getElementById('netitle-'+id);
+  const textEl=document.getElementById('nedit-'+id);
+  if(!textEl)return;
+  const n=notes[area].find(n=>n.id===id);if(!n)return;
+  if(titleEl)n.title=titleEl.value.trim()||'Sin título';
+  n.text=textEl.value.trim();
+  n.updatedAt=new Date().toISOString();
+  editingNoteId=null;saveNotes();renderNotes();showToast('Nota actualizada');
+}
+
+function pendingToTask(noteId,area,pendingId){
+  const n=notes[area].find(n=>n.id===noteId);if(!n)return;
+  const p=n.pending.find(p=>p.id===pendingId);if(!p||p.taskCreated)return;
+  // pre-fill and open inner
+  cArea=area;
+  document.getElementById('innerTitle').textContent=AREAS[area].name;
+  document.getElementById('innerDot').style.background=AREAS[area].color;
+  document.getElementById('dueDate').value=td();document.getElementById('dueTime').value='09:00';
+  document.getElementById('noVenc').checked=false;document.getElementById('dueDate').disabled=false;document.getElementById('dueTime').disabled=false;
+  document.getElementById('subareaInput').value='';resetPrio();
+  document.getElementById('taskInput').value=p.text;
+  p.taskCreated=true;saveNotes();
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen-inner').classList.add('active');
+  renderInner();showToast('Edita y agrega la tarea');
+}
+
+function noteToTask(id,area){
+  const n=notes[area].find(n=>n.id===id);if(!n)return;
+  cArea=area;
+  document.getElementById('innerTitle').textContent=AREAS[area].name;
+  document.getElementById('innerDot').style.background=AREAS[area].color;
+  document.getElementById('dueDate').value=td();document.getElementById('dueTime').value='09:00';
+  document.getElementById('noVenc').checked=false;document.getElementById('dueDate').disabled=false;document.getElementById('dueTime').disabled=false;
+  document.getElementById('subareaInput').value='';resetPrio();
+  document.getElementById('taskInput').value=n.title||n.text;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen-inner').classList.add('active');
+  renderInner();showToast('Edita y agrega la tarea');
+}
+
+function fmtNoteDate(iso){
+  const d=new Date(iso),now=new Date();
+  const diff=Math.floor((now-d)/86400000);
+  if(diff===0)return'Hoy '+d.toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
+  if(diff===1)return'Ayer';
+  if(diff<7)return d.toLocaleDateString('es-CL',{weekday:'short',day:'numeric',month:'short'});
+  return d.toLocaleDateString('es-CL',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function switchNoteTab(tab){
+  noteTab=tab;
+  document.querySelectorAll('.nat').forEach(b=>b.classList.remove('active'));
+  document.getElementById('nat-'+tab).classList.add('active');
+  renderNotes();
+}
+
+function renderNotes(){
+  const el=document.getElementById('notesList');
+  let list=[];
+  if(noteTab==='all'){ALL.forEach(a=>(notes[a]||[]).forEach(n=>list.push({...n,_area:a})));}
+  else{list=(notes[noteTab]||[]).map(n=>({...n,_area:noteTab}));}
+  list.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  if(!list.length){el.innerHTML='<div class="empty-notes">Sin notas. Toca "+ Nueva reunión / nota" para comenzar.</div>';return;}
+  el.innerHTML=list.map(n=>{
+    const isEditing=editingNoteId&&editingNoteId.id===n.id;
+    const pends=n.pending||[];
+    const pendHtml=pends.length>0?`<div class="note-card-section">Pendientes</div>${pends.map(p=>`
+      <div class="note-pending-card-item ${p.taskCreated?'converted':''}">
+        <div class="npc-check ${p.taskCreated?'checked':''}">${p.taskCreated?'<svg viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="var(--bg)" stroke-width="2.5" fill="none"/></svg>':''}</div>
+        <span class="note-pending-text">${p.text}</span>
+        ${!p.taskCreated?`<button class="npc-to-task" onclick="pendingToTask(${n.id},'${n._area}',${p.id})">→ Crear tarea</button>`:`<span class="npc-to-task done">✓ Tarea creada</span>`}
+      </div>`).join('')}`:'';
+    return`<div class="note-card">
+      <div class="note-card-top">
+        ${isEditing?`<div style="flex:1">
+          <input type="text" class="fi fi-text" id="netitle-${n.id}" value="${(n.title||'').replace(/"/g,'&quot;')}" style="margin-bottom:7px;width:100%"/>
+          <textarea class="note-textarea" id="nedit-${n.id}" rows="4">${n.text||''}</textarea>
+          <button class="note-edit-save" onclick="saveNoteEdit(${n.id},'${n._area}')">Guardar</button>
+        </div>`:`<div style="flex:1">
+          <div class="note-card-title">${n.title||'Sin título'}</div>
+          ${n.text?`<div class="note-text" style="font-size:13px;color:var(--text2)">${n.text}</div>`:''}
+          ${pendHtml}
+        </div>`}
+        <div class="note-actions">
+          <button class="icon-btn" onclick="startEditNote(${n.id},'${n._area}')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+          <button class="icon-btn" onclick="deleteNote(${n.id},'${n._area}')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+        </div>
+      </div>
+      <div class="note-meta">
+        <span class="area-tag area-tag-${n._area}">${AREAS[n._area].name}</span>
+        <span class="note-date">${fmtNoteDate(n.createdAt)}</span>
+        <button class="note-to-task-btn" onclick="noteToTask(${n.id},'${n._area}')">→ Como tarea</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Search ─────────────────────────────────────────────────────────────────────
+let searchFilter='all';
+function setSFilter(f){
+  searchFilter=f;
+  document.querySelectorAll('.sf-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sf-'+f).classList.add('active');
+  doSearch();
+}
+
+function highlight(text,q){
+  if(!q)return text;
+  const re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+  return text.replace(re,'<span class="search-highlight">$1</span>');
+}
+
+function doSearch(){
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
+  const el=document.getElementById('searchResults');
+  if(!q){el.innerHTML='<div class="search-empty">Escribe para buscar</div>';return;}
+  const results=[];
+  // Search tasks
+  if(searchFilter==='all'||searchFilter==='tasks'){
+    ALL.forEach(a=>tasks[a].forEach(t=>{
+      if(t.text.toLowerCase().includes(q)||( t.subarea&&t.subarea.toLowerCase().includes(q))){
+        results.push({type:'task',item:t,area:a});
+      }
+    }));
+  }
+  // Search notes
+  if(searchFilter==='all'||searchFilter==='notes'){
+    ALL.forEach(a=>(notes[a]||[]).forEach(n=>{
+      if(n.text.toLowerCase().includes(q)){
+        results.push({type:'note',item:n,area:a});
+      }
+    }));
+  }
+  if(!results.length){el.innerHTML=`<div class="search-empty">Sin resultados para "${q}"</div>`;return;}
+  el.innerHTML=results.map(r=>{
+    if(r.type==='task'){
+      const t=r.item;
+      const isOvd=!t.done&&!t.noVenc&&t.due&&t.due<td();
+      return`<div class="task-card ${t.done?'done':''} ${isOvd?'overdue':''}" style="margin-bottom:8px">
+        <button class="check-btn ${t.done?'checked':''}" onclick="toggleDone(${t.id},'${r.area}')"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></button>
+        <div class="task-body">
+          <div class="task-title">${highlight(t.text,q)}</div>
+          <div class="task-meta">
+            <span class="search-result-type">Tarea</span>
+            <span class="area-tag area-tag-${r.area}">${AREAS[r.area].name}</span>
+            <span class="prio-tag ${t.prio}">${t.prio==='alta'?'↑ Alta':t.prio==='media'?'→ Media':'↓ Baja'}</span>
+            ${t.subarea?`<span class="subarea-tag">${highlight(t.subarea,q)}</span>`:''}
+            <span class="due-tag ${isOvd?'late':''}">${fmtDue(t.due,t.time,t.noVenc)}</span>
+          </div>
+        </div>
+        <div class="task-actions">
+          <button class="icon-btn" onclick="openEdit(${t.id},'${r.area}')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        </div>
+      </div>`;
+    } else {
+      const n=r.item;
+      return`<div class="note-card" style="margin-bottom:8px">
+        <div class="note-card-top">
+          <div class="note-text">${highlight(n.text,q)}</div>
+          <button class="icon-btn" onclick="noteToTask(${n.id},'${r.area}')"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></button>
+        </div>
+        <div class="note-meta">
+          <span class="search-result-type">Nota</span>
+          <span class="area-tag area-tag-${r.area}">${AREAS[r.area].name}</span>
+          <span class="note-date">${fmtNoteDate(n.createdAt)}</span>
+        </div>
+      </div>`;
+    }
+  }).join('');
+}
+
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
-load();loadSub();setHeader();selDay=td();
+load();loadSub();loadNotes();setHeader();selDay=td();
 // Pull from Supabase first, then render
 pullFromSupabase().then(pulled => {
   autoMove();
@@ -804,4 +1174,3 @@ setInterval(()=>{setHeader();if(!cArea)renderHome();},60000);
 </script>
 </body>
 </html>
-
