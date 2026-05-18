@@ -476,19 +476,21 @@ function setSyncStatus(state, label) {
 async function pushToSupabase() {
   setSyncStatus('syncing', 'Guardando...');
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/midia_data?id=eq.main`, {
-      method: 'PATCH',
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/midia_data`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'apikey': SUPABASE_KEY,
         'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Prefer': 'return=minimal'
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
       },
-      body: JSON.stringify({ tasks, sub_mem: subMem, notes, updated_at: new Date().toISOString() })
+      body: JSON.stringify({ id: 'main', tasks, sub_mem: subMem, notes, updated_at: new Date().toISOString() })
     });
     if (res.ok) {
       setSyncStatus('ok', 'Sincronizado');
     } else {
+      const err = await res.text();
+      console.error('Supabase push error:', err);
       setSyncStatus('error', 'Error al guardar');
     }
   } catch(e) {
@@ -1119,7 +1121,7 @@ function doSearch(){
   // Search notes
   if(searchFilter==='all'||searchFilter==='notes'){
     ALL.forEach(a=>(notes[a]||[]).forEach(n=>{
-      if(n.text.toLowerCase().includes(q)){
+      if((n.title&&n.title.toLowerCase().includes(q))||(n.text&&n.text.toLowerCase().includes(q))||(n.pending||[]).some(p=>p.text.toLowerCase().includes(q))){
         results.push({type:'note',item:n,area:a});
       }
     }));
@@ -1149,7 +1151,8 @@ function doSearch(){
       const n=r.item;
       return`<div class="note-card" style="margin-bottom:8px">
         <div class="note-card-top">
-          <div class="note-text">${highlight(n.text,q)}</div>
+          <div class="note-card-title">${highlight(n.title||'Sin título',q)}</div>
+          ${n.text?`<div style="font-size:12px;color:var(--text2);margin-top:3px">${highlight(n.text,q)}</div>`:''}
           <button class="icon-btn" onclick="noteToTask(${n.id},'${r.area}')"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></button>
         </div>
         <div class="note-meta">
