@@ -600,11 +600,13 @@ async function doReset() {
   else showAuthMsg('Revisa tu correo para restablecer la contraseña', 'success');
 }
 async function doLogout() {
+  loggingOut = true;
   await sb.auth.signOut();
-  currentUser = null; tasks = {}; notes = {}; subMem = {}; areas = [...DEFAULT_AREAS];
+  currentUser = null; appInited = false; tasks = {}; notes = {}; subMem = {}; areas = [...DEFAULT_AREAS];
   document.getElementById('mainNav').style.display = 'none';
   document.getElementById('syncIndicator').style.display = 'none';
   showOnlyScreen('auth');
+  setTimeout(() => { loggingOut = false; }, 1000);
 }
 
 // ── SYNC ──────────────────────────────────────────────────────────────────────
@@ -1102,11 +1104,12 @@ async function initApp(user) {
 }
 
 let appInited = false;
+let loggingOut = false;
 
 sb.auth.onAuthStateChange(async (event, session) => {
-  if (session && session.user) {
+  if (session && session.user && !loggingOut) {
     if (!appInited) { appInited = true; await initApp(session.user); }
-  } else {
+  } else if (!session) {
     appInited = false;
     document.getElementById('mainNav').style.display = 'none';
     document.getElementById('syncIndicator').style.display = 'none';
