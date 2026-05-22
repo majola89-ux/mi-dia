@@ -1084,12 +1084,30 @@ async function initApp(user) {
   setInterval(() => { setHeader(); if (!cArea) renderHome(); }, 60000);
 }
 
+let appInited = false;
+
 sb.auth.onAuthStateChange(async (event, session) => {
-  if (session && session.user) { await initApp(session.user); }
-  else { document.getElementById('mainNav').style.display = 'none'; document.getElementById('syncIndicator').style.display = 'none'; showOnlyScreen('auth'); }
+  if (session && session.user) {
+    if (!appInited) { appInited = true; await initApp(session.user); }
+  } else {
+    appInited = false;
+    document.getElementById('mainNav').style.display = 'none';
+    document.getElementById('syncIndicator').style.display = 'none';
+    showOnlyScreen('auth');
+  }
 });
 
-sb.auth.getSession().then(({ data: { session } }) => { if (!session) showOnlyScreen('auth'); });
+// Fallback: if no session after 3s, show auth
+sb.auth.getSession().then(({ data: { session } }) => {
+  if (!session) {
+    showOnlyScreen('auth');
+  }
+}).catch(() => showOnlyScreen('auth'));
+
+setTimeout(() => {
+  const loading = document.getElementById('screen-loading');
+  if (loading && loading.classList.contains('active')) showOnlyScreen('auth');
+}, 4000);
 </script>
 </body>
 </html>
